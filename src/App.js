@@ -5,32 +5,14 @@ import './styles/Feed.css';
 import userIcon from './images/user.svg';
 import paperPlaneIcon from './images/paper-plane.svg';
 import clockIcon from './images/clock.svg';
+import emptyFolderIcon from './images/empty-folder.svg';
 
-// fontSize
 export default function App() {
     const posts = [
         {
             id: Math.random(),
             content: 'Conteúdo do post',
             userName: 'Mateus',
-            publishedAt: new Date(),
-        },
-        {
-            id: Math.random(),
-            content: 'Este é o post2',
-            userName: 'Usuário 2',
-            publishedAt: new Date(),
-        },
-        {
-            id: Math.random(),
-            content: 'Este é o post3',
-            userName: 'Usuário 3',
-            publishedAt: new Date(),
-        },
-        {
-            id: Math.random(),
-            content: 'Este é o post4',
-            userName: 'Usuário 4',
             publishedAt: new Date(),
         },
     ];
@@ -54,12 +36,25 @@ export default function App() {
         </form>
 
         <main>
-            <header>
-                <h1>Seu Feed</h1>
-                <h2>Acompanhe o que seus amigos estão pensando em tempo real</h2>
-            </header>
+            {posts.length === 0 && (
+                <div className="feed-status">
+                    <img src={emptyFolderIcon} alt="empty folder" />
 
-            <section className="feed">
+                    <h1>Não encontramos nada</h1>
+                    <h2>
+                        Parece que você e seus amigos não postaram nada. Comece a escrever uma nova história!
+                    </h2>
+                </div>
+            )}
+            
+            {posts.length > 0 && (
+                <>
+                <header>
+                    <h1>Seu Feed</h1>
+                    <h2>Acompanhe o que seus amigos estão pensando em tempo real</h2>
+                </header>
+
+                <section className="feed">
                 {posts.map((post) => (
                     <article key={post.id}>
                         <p> {post.content} </p>
@@ -77,7 +72,9 @@ export default function App() {
                         </footer>
                     </article>
                 ))}
-            </section>
+                </section>
+                </>
+            )}
         </main>
     </div>
     )
