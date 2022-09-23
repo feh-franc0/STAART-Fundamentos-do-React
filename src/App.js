@@ -8,7 +8,7 @@ import paperPlaneIcon from './images/paper-plane.svg';
 export default function App() {
     return (
     <div className='wrapper'>
-        <form className="post-form">
+        <form className="post-form" onClick={() => alert('Formulário submetido')}>
             <input placeholder="Escreva uma nova história..." />
 
             <div>
