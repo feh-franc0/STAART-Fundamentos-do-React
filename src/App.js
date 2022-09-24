@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import './styles/App.css';
 import './styles/PostForm.css';
 import './styles/Feed.css';
@@ -8,74 +10,88 @@ import clockIcon from './images/clock.svg';
 import emptyFolderIcon from './images/empty-folder.svg';
 
 export default function App() {
-    const posts = [
-        {
-            id: Math.random(),
-            content: 'Conteúdo do post',
-            userName: 'Mateus',
-            publishedAt: new Date(),
-        },
-    ];
+	const [posts, setPosts] = useState([
+		{
+			id: Math.random(),
+			content: 'Conteúdo do post',
+			userName: 'Mateus',
+			publishedAt: new Date(),
+		},
+	]);
 
-    return (
-    <div className='wrapper'>
-        <form className="post-form" onClick={() => alert('Formulário submetido')}>
-            <input placeholder="Escreva uma nova história..." />
+	function handleSubmit(event) {
+    event.preventDefault();
 
-            <div>
-                <img src={userIcon} alt="User"/>
+		setPosts([
+      ...posts,
+      {
+        id: Math.random(),
+        content: `Conteúdo do post ${Math.random()}`,
+        userName: 'Mateus',
+        publishedAt: new Date(),
+      },
+    ]);
+	}
 
-                <input placeholder="Digite seu nome..." />
+	return (
+	<div className='wrapper'>
+		<form className="post-form" onClick={handleSubmit}>
+			<input placeholder="Escreva uma nova história..." />
 
-                <button type="submit">
-                    <img src={paperPlaneIcon} alt="Paper plane"/>
+			<div>
+				<img src={userIcon} alt="User"/>
 
-                    Publicar
-                </button>
-            </div>
-        </form>
+				<input placeholder="Digite seu nome..." />
 
-        <main>
-            {posts.length === 0 && (
-                <div className="feed-status">
-                    <img src={emptyFolderIcon} alt="empty folder" />
+				<button type="submit">
+					<img src={paperPlaneIcon} alt="Paper plane"/>
 
-                    <h1>Não encontramos nada</h1>
-                    <h2>
-                        Parece que você e seus amigos não postaram nada. Comece a escrever uma nova história!
-                    </h2>
-                </div>
-            )}
-            
-            {posts.length > 0 && (
-                <>
-                <header>
-                    <h1>Seu Feed</h1>
-                    <h2>Acompanhe o que seus amigos estão pensando em tempo real</h2>
-                </header>
+					Publicar
+				</button>
+			</div>
+		</form>
 
-                <section className="feed">
-                {posts.map((post) => (
-                    <article key={post.id}>
-                        <p> {post.content} </p>
+		<main>
+			{posts.length === 0 && (
+				<div className="feed-status">
+					<img src={emptyFolderIcon} alt="empty folder" />
 
-                        <footer>
-                            <div className="user-details">
-                                <img src={userIcon} alt="User" />
-                                <strong>{post.userName}</strong>
-                            </div>
+					<h1>Não encontramos nada</h1>
+					<h2>
+						Parece que você e seus amigos não postaram nada. Comece a escrever uma nova história!
+					</h2>
+				</div>
+			)}
+			
+			{posts.length > 0 && (
+				<>
+				<header>
+					<h1>Seu Feed</h1>
+					<h2>Acompanhe o que seus amigos estão pensando em tempo real</h2>
+				</header>
 
-                            <div className="time">
-                                <img src={clockIcon} alt="Clock" />
-                                <span>Publicado em {post.publishedAt.toLocaleDateString('pt-br')}</span>
-                            </div>
-                        </footer>
-                    </article>
-                ))}
-                </section>
-                </>
-            )}
-        </main>
-    </div>
-    )
+				<section className="feed">
+				{posts.map((post) => (
+					<article key={post.id}>
+						<p> {post.content} </p>
+
+						<footer>
+							<div className="user-details">
+								<img src={userIcon} alt="User" />
+								<strong>{post.userName}</strong>
+							</div>
+
+							<div className="time">
+								<img src={clockIcon} alt="Clock" />
+								<span>Publicado em {post.publishedAt.toLocaleDateString('pt-br')}</span>
+							</div>
+						</footer>
+					</article>
+				))}
+				</section>
+				</>
+			)}
+		</main>
+	</div>
+	)
 }
